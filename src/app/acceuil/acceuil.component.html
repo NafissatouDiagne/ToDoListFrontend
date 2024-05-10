@@ -1,0 +1,108 @@
+<div class="content" style="display: flex;">
+  <div class="main">
+    <h3 style="margin: 5%;">
+      Todo List
+    </h3>
+    <div class="list1">
+
+      <i class="fas fa-plus-circle" aria-hidden="true"></i>
+      <span style="font-size:larger; cursor: pointer;" data-toggle="modal" data-target="#exampleModal">Ajouter une tache</span>
+
+
+      <hr>
+    </div>
+    <div class="list2">
+      <h4 style="color: brown; padding: 5%;text-decoration: underline;">Listes des taches</h4>
+      <div class="card-body" style="padding-left: 6%;" *ngFor="let tache of allTaches let i=index">
+       <i class="fa fa-address-book" aria-hidden="true"></i>
+        <p style="font-size:larger; cursor: pointer;" (click)="Affich(i)"> <span [ngClass]="{'color1':i%2===0,'color2':i%2!==0}">
+            #</span> {{tache.title}}</p>
+      </div>
+    </div>
+
+  </div>
+  <div class="container" style="margin-top: 20px;">
+    <div class="main-content">
+      <div class="row" *ngFor="let item of listes">
+        <div class="col-sm-12  mb-2 mb-sm-0  " style="position: relative;">
+          <div class="card" style="background-color: rgb(13, 13, 75);">
+            <div class="card-body">
+              <h5 class="card-title" style="color: white;">{{item.name}}</h5>
+              <a href="#" style="text-decoration: none;" class="">{{item.end}}</a>
+            </div>
+          </div>
+          <i class="fa fa-address-book-o" aria-hidden="true" style=" position: absolute;top: 0;right: 0;padding: 1%;"
+            [style.background-color]="item.bgcolor">{{item.icon}}</i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Nouvelle tache</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form #form="ngForm" (ngSubmit)="SubmitTaches(form)">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="taskTitle">Titre de la tâche</label>
+              <input type="text" class="form-control" id="taskTitle" name="title" [(ngModel)]="newTaches.title" placeholder="Entrez le titre de la tâche">
+            </div>
+            <div class="form-group" id="taskList">
+              <label for="taskName">Noms des taches</label>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nom</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" class="form-control" name="name" [(ngModel)]="newTaches.name" placeholder="Nom"></td>
+                    <td><input type="date" class="form-control" name="dateEnd" [(ngModel)]="newTaches.dateEnd"></td>
+                    <td><input type="time" class="form-control" name="hour" [(ngModel)]="newTaches.hour"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-primary" id="addTask">Ajouter une tache</button>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="details" *ngIf="afficher">
+      <h2 style="color: brown;"> <span style="color: chocolate;"> # </span>{{taches.title}} </h2>
+
+      <div class="task-details" *ngFor="let name of taches.name">
+        <div class="task-info">
+          <h4 class="task-name">{{name}}</h4>
+          <p class="task-date">{{formatDate(taches.dateEnd)}} à {{taches.hour}}</p>
+        </div>
+        <div class="task-actions">
+          <button type="button" class="btn btn-danger" (click)="delete(taches._id)" >X </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
