@@ -97,6 +97,7 @@ console.log('this.taches[i]', this.taches)
         this.allTaches=response.all;
         return this.allTaches;
       })
+      this.loadAllTasks()
     },
     (error)=>{
   console.log('error', error)
